@@ -1,0 +1,10 @@
+langchain
+langgraph
+langchain-groq
+langchain-core
+python-dotenv
+beautifulsoup4
+requests
+tavily-python
+httpx  # For async web requests
+pydantic
