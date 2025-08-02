@@ -1,4 +1,4 @@
-# Summarize Agent
+# Research and Summarize Agent
 
 This project is a sophisticated, multi-agent framework designed to research, process, and generate comprehensive reports on a given topic. By breaking down the research process into specialized roles, this system can efficiently gather, filter, and synthesize information from the web to produce high-quality, structured reports.
 
