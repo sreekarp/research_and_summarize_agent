@@ -1,22 +1,21 @@
 # Research and Summarize Agent
 
-This project is a sophisticated, multi-agent framework designed to research, process, and generate comprehensive reports on a given topic. By breaking down the research process into specialized roles, this system can efficiently gather, filter, and synthesize information from the web to produce high-quality, structured reports.
+This is a sophisticated, multi-agent framework designed to research, process, and generate comprehensive reports on a given topic. By breaking down the research process into specialized roles, this system can efficiently gather, filter, and synthesize information from the web to produce high-quality, structured reports.
 
 ---
 
 ## 🚀 Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
+These instructions will get you a copy of the project up and running on your local machine.
 ### Prerequisites
 
-Before you begin, ensure you have the following software installed on your system:
+Before you begin, ensure you have the following installed on your system:
 
-* **Python 3.9 or later**: This project is built using modern Python features.
+* **Python 3.9 or later**: This project is built using Python>=3.9.
 * **pip**: The package installer for Python is required to install dependencies.
 * **A Git client**: To clone the repository and manage source control.
 
-You will also need an API key from [Tavily](https://tavily.com/) for the search functionality and API access from [Groq](https://groq.com/) to use the language models.
+Also get the API key from [Tavily](https://tavily.com/) for the web search functionality and API key from [Groq](https://groq.com/) to use the language models.
 
 ### Installation
 
@@ -57,11 +56,11 @@ The script will then initiate the research process, and you will see the agent's
 The Research Process
 The agent operates through a series of steps orchestrated by a state graph:
 
-* **Planner**: Based on the input topic, this agent generates a list of relevant subtopics to guide the research.
+* **Planner**: Based on the input topic, planner agent generates a list of relevant subtopics to guide the research.
 
-* **Searcher**: For each subtopic, the agent performs a web search to find relevant articles and sources.
+* **Searcher**: For each subtopic, the searcher agent performs a web search and fetches the relevant articles and sources.
 
-* **Retriever**: The content from the search results is fetched, and a relevance check is performed to filter out irrelevant information.
+* **Retriever**: The content from the search results fetched by searcher agent is retrieved, and a relevance check is performed to filter out irrelevant information.
 
 * **Summarizer**: The retrieved content is summarized into key bullet points for each subtopic.
 
@@ -71,8 +70,8 @@ The agent operates through a series of steps orchestrated by a state graph:
 
 ---
 ## 🛠️ Built With
-* [**LangChain**](https://www.langchain.com/): A framework for developing applications powered by language models.
-* [**LangGraph**](https://www.langchain.com/langgraph): A library for building stateful, multi-actor applications with LLMs.
-* [**Tavily**](https://tavily.com/): A search API optimized for LLM-powered applications.
+* [**LangChain**](https://www.langchain.com/): Framework for developing applications powered by language models.
+* [**LangGraph**](https://www.langchain.com/langgraph): Library for building stateful, multi-actor applications with LLMs.
+* [**Tavily**](https://tavily.com/): Search API optimized for LLM-powered applications.
 * [**Groq**](https://groq.com/): Provides the large language models used for the different agents.
-* [**Beautiful Soup**](https://www.crummy.com/software/BeautifulSoup/): A Python library for pulling data out of HTML and XML files.
+* [**Beautiful Soup**](https://www.crummy.com/software/BeautifulSoup/): Python library for pulling data out of HTML and XML files.
