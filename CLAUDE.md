@@ -6,11 +6,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 python -m venv venv && source venv/bin/activate   # Python 3.10+ (LangGraph requires it); on Windows: venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt     # pinned app dependencies + pytest/respx/ruff
 python main.py "Some research topic"   # defaults to "Impact of generative AI on education"
+ruff check .                           # lint (bug-focused rules, see pyproject.toml)
+pytest                                 # offline test suite, ~1 minute
+pytest tests/test_pipeline.py -k gap   # a single test
 ```
 
-Requires a `.env` in the repo root with `TAVILY_API_KEY` and `GROQ_API_KEY` (`.env` is gitignored); `main.py` exits with code 2 and a clear message if either is missing. Exit code 1 means no report was produced (planner returned nothing, nothing could be cited, or a `ServiceError` stopped the run). There is no test suite, linter, or build step yet.
+Requires a `.env` in the repo root with `TAVILY_API_KEY` and `GROQ_API_KEY` (`.env` is gitignored); `main.py` exits with code 2 and a clear message if either is missing. Exit code 1 means no report was produced (planner returned nothing, nothing could be cited, or a `ServiceError` stopped the run). Dependencies are pinned with `==` in `requirements.txt`; bump them deliberately and rerun the tests. CI (`.github/workflows/ci.yml`) runs ruff and pytest on Python 3.10 and 3.12.
+
+## Tests
+
+The tests never call real APIs. `tests/fakes.py` has `FakeServices`, which answers Groq, Tavily and page requests through respx while the real clients and graph run unchanged; `tests/conftest.py` sets fake API keys before anything imports `config` and fakes DNS for every test. To script a scenario, subclass `FakeServices`, override a method (`plan`, `relevant`, `page_summary`, `bullets`, `follow_ups`, `critique`, `writer`, `search`, `tavily`), and call `run_pipeline()`. Return `BAD_REQUEST` or an `httpx.Response` from a handler to simulate failures. Tests that run `main.py` as a subprocess must keep API keys empty (not absent), or the real `.env` would be loaded and make live calls.
 
 ## Architecture
 

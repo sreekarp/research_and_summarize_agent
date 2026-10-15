@@ -90,8 +90,8 @@ async def summarizer_fn(state: ResearchState) -> dict:
         for subtopic in subtopics
     ))
     # Irrelevant documents are dropped here, so nothing can cite them
-    documents = {subtopic: docs for subtopic, (docs, _) in zip(subtopics, outcomes)}
-    bullets_by_topic = {subtopic: bullets for subtopic, (_, bullets) in zip(subtopics, outcomes)}
+    documents = {subtopic: docs for subtopic, (docs, _) in zip(subtopics, outcomes, strict=True)}
+    bullets_by_topic = {subtopic: bullets for subtopic, (_, bullets) in zip(subtopics, outcomes, strict=True)}
 
     print("\n--- Summarization Complete ---")
     for subtopic, bullets in bullets_by_topic.items():

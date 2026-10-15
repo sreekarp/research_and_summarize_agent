@@ -1,5 +1,7 @@
 # Research and Summarize Agent
 
+[![CI](https://github.com/sreekarp/research_and_summarize_agent/actions/workflows/ci.yml/badge.svg)](https://github.com/sreekarp/research_and_summarize_agent/actions/workflows/ci.yml)
+
 This is a sophisticated, multi-agent framework designed to research, process, and generate comprehensive reports on a given topic. By breaking down the research process into specialized roles, this system can efficiently gather, filter, and synthesize information from the web to produce high-quality, structured reports.
 
 ---
@@ -75,6 +77,19 @@ The agent operates through a series of steps orchestrated by a state graph:
 * Web content is treated as untrusted data in every prompt, to resist prompt injection.
 * A single failed request is skipped instead of crashing the run, while problems that would fail every request (such as a rejected API key) stop the run with a clear message.
 * If no source can be cited, no report is written, instead of producing one from nothing. Parts of the topic without sources are listed under "Research gaps" rather than filled in.
+
+---
+## 🧪 Testing
+
+The test suite runs the whole pipeline offline: it fakes Groq, Tavily and every web page, so it needs no API keys and makes no network calls.
+
+```bash
+pip install -r requirements-dev.txt
+ruff check .   # lint
+pytest         # tests
+```
+
+GitHub Actions runs both on every push and pull request, on Python 3.10 and 3.12.
 
 ---
 ## 🛠️ Built With

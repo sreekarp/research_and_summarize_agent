@@ -31,7 +31,7 @@ async def retriever_fn(state: ResearchState) -> dict:
     to_fetch = list({result.url: result for _, result in jobs if result.url not in texts}.values())
     async with create_http_client() as client:
         pages = await asyncio.gather(*(_load_page(client, result) for result in to_fetch))
-    texts.update((result.url, text) for result, text in zip(to_fetch, pages))
+    texts.update((result.url, text) for result, text in zip(to_fetch, pages, strict=True))
 
     # Documents accumulate across passes; ids continue from the last pass so citations stay unique
     documents = {subtopic: list(state.documents.get(subtopic, [])) for subtopic in state.subtopics}

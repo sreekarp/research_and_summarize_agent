@@ -16,7 +16,7 @@ async def searcher_fn(state: ResearchState) -> dict:
 
     seen_urls = {subtopic: list(urls) for subtopic, urls in state.seen_urls.items()}
     results = {}
-    for (subtopic, _), hits in zip(jobs, responses):
+    for (subtopic, _), hits in zip(jobs, responses, strict=True):
         seen = seen_urls.setdefault(subtopic, [])
         new_hits = results.setdefault(subtopic, [])
         for hit in hits:
