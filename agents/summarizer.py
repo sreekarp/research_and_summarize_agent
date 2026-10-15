@@ -1,6 +1,6 @@
 import asyncio
 from langchain_core.runnables import RunnableLambda
-from config import LLM_SUMMARIZER
+from config import LLM_SUMMARIZER, LLM_SEMAPHORE
 from tools.prompts import map_summarize_prompt, reduce_bullets_prompt
 from graph.state import ResearchState
 
@@ -9,7 +9,8 @@ async def _map_summarize_doc(document: dict, subtopic: str) -> str:
         "subtopic": subtopic,
         "text": document["text"]
     })
-    response = await LLM_SUMMARIZER.ainvoke(prompt)
+    async with LLM_SEMAPHORE:
+        response = await LLM_SUMMARIZER.ainvoke(prompt)
     return response.content
 
 async def summarizer_fn(state: ResearchState) -> dict:

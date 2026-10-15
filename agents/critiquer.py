@@ -28,6 +28,10 @@ async def critiquer_fn(state: ResearchState) -> dict:
     
     print(f"--- Critique ---\nCritique: {critique}\nDecision: {'Revision Needed' if needs_revision else 'Complete'}\n--------------\n")
 
-    return {"critique": critique, "needs_revision": needs_revision}
+    return {
+        "critique": critique,
+        "needs_revision": needs_revision,
+        "revision_number": state.revision_number + 1,
+    }
 
 CritiquerAgent = RunnableLambda(critiquer_fn)

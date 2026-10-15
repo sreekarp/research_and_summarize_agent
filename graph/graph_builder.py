@@ -15,12 +15,10 @@ def should_continue_or_end(state: ResearchState) -> str:
 
 def should_revise_or_finish(state: ResearchState) -> str:
     """Based on critique, decide to revise the search or finish the report."""
-    revision_number = state.revision_number + 1
-    if state.needs_revision and revision_number < state.max_revisions:
-        print(f"--- Decision: Revising (Attempt {revision_number}) ---")
-        # The state is automatically passed to the next node,
-        # so we just need to update the revision number.
-        state.revision_number = revision_number
+    # revision_number is incremented by the critiquer; state changes made
+    # here in a routing function would not be persisted.
+    if state.needs_revision and state.revision_number < state.max_revisions:
+        print(f"--- Decision: Revising (Attempt {state.revision_number}) ---")
         return "searcher"
     else:
         print("--- Decision: Finalizing Report ---")

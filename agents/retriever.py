@@ -3,7 +3,7 @@ from typing import Optional
 from langchain_core.runnables import RunnableLambda
 from tools.web_loader import load_url_text
 from tools.prompts import relevance_check_prompt
-from config import LLM_PLANNER
+from config import LLM_PLANNER, LLM_SEMAPHORE
 from graph.state import ResearchState
 
 async def _filter_and_load_link(link: dict, subtopic: str) -> Optional[dict]:
@@ -19,7 +19,8 @@ async def _filter_and_load_link(link: dict, subtopic: str) -> Optional[dict]:
         return None
 
     prompt = relevance_check_prompt.invoke({"subtopic": subtopic, "text": text[:500]})
-    response = await LLM_PLANNER.ainvoke(prompt)
+    async with LLM_SEMAPHORE:
+        response = await LLM_PLANNER.ainvoke(prompt)
 
     if "irrelevant" in response.content.lower():
         print(f"[!] Discarded as irrelevant: {url}")
