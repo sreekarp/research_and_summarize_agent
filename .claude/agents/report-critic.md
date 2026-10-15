@@ -10,14 +10,15 @@ You review one report produced by this repository's research pipeline. You can r
 You'll be given a report path and usually its log path.
 
 Context about how reports are made:
-- The writer LLM expands 3-5 bullet points per subtopic into prose, so it can add detail that no source supports.
-- The report has no citations. The log shows which sources fed each subtopic (`[+] Kept as relevant: <url>`) and how many documents each subtopic got (`Retrieved N relevant documents`).
+- The writer LLM expands 3-5 cited bullet points per subtopic into prose, so it can still add detail that no source supports.
+- Claims carry citation markers like `[2]` that point to the References list at the end, which is built from the fetched pages (not written by the model). Judge each section's sourcing from its markers: uncited sentences, or a section that leans on a single source, deserve attention.
+- The log shows which pages were kept per subtopic (`[+] Kept as relevant for '<subtopic>': <url>`) and how many each subtopic ended with (`Kept N relevant documents`). Subtopics with no findings are listed under `## Research gaps` near the end of the report, not as sections; treat those as known gaps, and look for important angles that are missing from both.
 
 Review the report and return:
 
 1. **Verdict:** one sentence on overall quality.
 2. **Top findings (max 5)**, most important first. For each one, give the section, the problem, and why it matters. Look for:
-   - sections built on 0-1 source documents (check the log)
+   - sections built on 0-1 sources (check the citation markers and the log)
    - specific numbers, names or claims that look invented or unsupported
    - vague filler that says nothing concrete
    - obvious angles of the topic that are missing
